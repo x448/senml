@@ -3,14 +3,15 @@ package main
 import (
 	"bufio"
 	"bytes"
+	"errors"
 	"flag"
 	"fmt"
-	"github.com/cisco/senml"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"runtime/pprof"
-	"errors"
+
+	"github.com/x448/senml"
 )
 
 var doIndentPtr = flag.Bool("i", false, "indent output")
@@ -23,7 +24,8 @@ var doJsonPtr = flag.Bool("json", false, "output JSON formatted SenML ")
 var doCborPtr = flag.Bool("cbor", false, "output CBOR formatted SenML ")
 var doXmlPtr = flag.Bool("xml", false, "output XML formatted SenML ")
 var doCsvPtr = flag.Bool("csv", false, "output CSV formatted SenML ")
-var doMpackPtr = flag.Bool("mpack", false, "output MessagePack formatted SenML ")
+
+//var doMpackPtr = flag.Bool("mpack", false, "output MessagePack formatted SenML ")
 var doLinpPtr = flag.Bool("linp", false, "output InfluxDB LineProtcol formatted SenML ")
 var doJsonLinePtr = flag.Bool("jsonl", false, "outpute JSON formatted SenML Record lines")
 
@@ -31,7 +33,8 @@ var doIJsonStreamPtr = flag.Bool("ijson", false, "input JSON formatted SenML")
 var doIJsonLinePtr = flag.Bool("ijsonl", false, "input JSON formatted SenML Record lines")
 var doIXmlPtr = flag.Bool("ixml", false, "input XML formatted SenML ")
 var doICborPtr = flag.Bool("icbor", false, "input CBOR formatted SenML ")
-var doIMpackPtr = flag.Bool("impack", false, "input MessagePack formatted SenML ")
+
+//var doIMpackPtr = flag.Bool("impack", false, "input MessagePack formatted SenML ")
 
 func decodeTimed(msg []byte) (senml.SenML, error) {
 	var s senml.SenML
@@ -47,8 +50,8 @@ func decodeTimed(msg []byte) (senml.SenML, error) {
 		format = senml.CBOR
 	case *doIXmlPtr:
 		format = senml.XML
-	case *doIMpackPtr:
-		format = senml.MPACK
+		//	case *doIMpackPtr:
+		//		format = senml.MPACK
 	}
 
 	s, err = senml.Decode(msg, format)
@@ -71,10 +74,10 @@ func outputData(data []byte) error {
 		}
 		defer resp.Body.Close()
 		body, err := ioutil.ReadAll(resp.Body)
-		if  resp.StatusCode  != 204 {
-			fmt.Println("Post got status " , resp.Status )
-			fmt.Println("Post got",  string(body) )
-			return errors.New("WebServer returned: " + string(body) )
+		if resp.StatusCode != 204 {
+			fmt.Println("Post got status ", resp.Status)
+			fmt.Println("Post got", string(body))
+			return errors.New("WebServer returned: " + string(body))
 		}
 	}
 
@@ -91,7 +94,7 @@ func processData(dataIn []byte) error {
 		return err
 	}
 
-     	//fmt.Println( "Senml:", senml.Records )
+	//fmt.Println( "Senml:", senml.Records )
 	if *doResolvePtr {
 		s = senml.Normalize(s)
 	}
@@ -114,8 +117,8 @@ func processData(dataIn []byte) error {
 		format = senml.XML
 	case *doCsvPtr:
 		format = senml.CSV
-	case *doMpackPtr:
-		format = senml.MPACK
+		//	case *doMpackPtr:
+		//		format = senml.MPACK
 	case *doLinpPtr:
 		format = senml.LINEP
 	}
@@ -129,25 +132,25 @@ func processData(dataIn []byte) error {
 		reader := bytes.NewReader(dataOut)
 		lines := bufio.NewScanner(reader)
 		for lines.Scan() {
-			err = outputData( []byte( lines.Text() ) )
+			err = outputData([]byte(lines.Text()))
 			if err != nil {
 				fmt.Println("Output of SenML failed:", err)
 				return err
 			}
 		}
-		
-		err = lines.Err();
+
+		err = lines.Err()
 		if err != nil {
 			fmt.Println("Encode scanning lines in output")
 		}
 	} else {
-		err = outputData( dataOut )
+		err = outputData(dataOut)
 		if err != nil {
 			fmt.Println("Output of SenML failed:", err)
 			return err
 		}
 	}
-	
+
 	return nil
 }
 
@@ -155,15 +158,15 @@ func main() {
 	var err error
 
 	if false {
-        f, err := os.Create( "senmlCat.prof" )
-        if err != nil {
-            fmt.Println("error opening profile file", err)
+		f, err := os.Create("senmlCat.prof")
+		if err != nil {
+			fmt.Println("error opening profile file", err)
 			os.Exit(1)
-        }
-        pprof.StartCPUProfile(f)
-        defer pprof.StopCPUProfile()
-    }
-	
+		}
+		pprof.StartCPUProfile(f)
+		defer pprof.StopCPUProfile()
+	}
+
 	flag.Parse()
 
 	//fmt.Print("Reading file ...")

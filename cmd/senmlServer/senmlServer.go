@@ -6,7 +6,6 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"github.com/cisco/senml"
 	"hash/crc32"
 	"io/ioutil"
 	"net"
@@ -14,6 +13,8 @@ import (
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/x448/senml"
 )
 
 // TODO
@@ -40,14 +41,16 @@ var doJsonPtr = flag.Bool("json", false, "output JSON formatted SenML ")
 var doCborPtr = flag.Bool("cbor", false, "output CBOR formatted SenML ")
 var doXmlPtr = flag.Bool("xml", false, "output XML formatted SenML ")
 var doCsvPtr = flag.Bool("csv", false, "output CSV formatted SenML ")
-var doMpackPtr = flag.Bool("mpack", false, "output MessagePack formatted SenML ")
+
+//var doMpackPtr = flag.Bool("mpack", false, "output MessagePack formatted SenML ")
 var doLinpPtr = flag.Bool("linp", false, "output InfluxDB LineProtcol formatted SenML ")
 
 var doIJsonStreamPtr = flag.Bool("ijsons", false, "input JSON formatted SenML stream")
 var doIJsonLinePtr = flag.Bool("ijsonl", false, "input JSON formatted SenML lines")
 var doIXmlPtr = flag.Bool("ixml", false, "input XML formatted SenML ")
 var doICborPtr = flag.Bool("icbor", false, "input CBOR formatted SenML ")
-var doIMpackPtr = flag.Bool("impack", false, "input MessagePack formatted SenML ")
+
+//var doIMpackPtr = flag.Bool("impack", false, "input MessagePack formatted SenML ")
 
 var kafkaConn net.Conn = nil
 var kafkaReqNumber uint32 = 1
@@ -66,8 +69,8 @@ func decodeTimed(msg []byte) (senml.SenML, error) {
 		format = senml.CBOR
 	case *doIXmlPtr:
 		format = senml.XML
-	case *doIMpackPtr:
-		format = senml.MPACK
+		//	case *doIMpackPtr:
+		//		format = senml.MPACK
 	}
 
 	s, err = senml.Decode(msg, format) // TODO
@@ -345,8 +348,8 @@ func processData(dataIn []byte) error {
 		format = senml.XML
 	case *doCsvPtr:
 		format = senml.CSV
-	case *doMpackPtr:
-		format = senml.MPACK
+		//	case *doMpackPtr:
+		//		format = senml.MPACK
 	case *doLinpPtr:
 		format = senml.LINEP
 	}

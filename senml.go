@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ugorji/go/codec"
+	"github.com/fxamacker/cbor"
 )
 
 type Format int
@@ -21,7 +21,8 @@ const (
 	XML
 	CBOR
 	CSV
-	MPACK
+	//MPACK
+	_
 	LINEP
 	JSONLINE
 )
@@ -34,24 +35,26 @@ type OutputOptions struct {
 type SenMLRecord struct {
 	XMLName *bool `json:"_,omitempty" xml:"senml"`
 
-	BaseName    string  `json:"bn,omitempty"  xml:"bn,attr,omitempty"`
-	BaseTime    float64 `json:"bt,omitempty"  xml:"bt,attr,omitempty"`
-	BaseUnit    string  `json:"bu,omitempty"  xml:"bu,attr,omitempty"`
-	BaseVersion int     `json:"bver,omitempty"  xml:"bver,attr,omitempty"`
+	BaseName    string  `json:"bn,omitempty"  xml:"bn,attr,omitempty"  cbor:"-2,keyasint,omitempty"`
+	BaseTime    float64 `json:"bt,omitempty"  xml:"bt,attr,omitempty"  cbor:"-3,keyasint,omitempty"`
+	BaseUnit    string  `json:"bu,omitempty"  xml:"bu,attr,omitempty"  cbor:"-4,keyasint,omitempty"`
+	BaseVersion int     `json:"bver,omitempty"  xml:"bver,attr,omitempty"  cbor:"-1,keyasint,omitempty"`
+	BaseValue   float64 `json:"bv,omitempty"  xml:"bv,attr,omitempty"  cbor:"-5,keyasint,omitempty"`
+	BaseSum     float64 `json:"bs,omitempty"  xml:"bs,attr,omitempty"  cbor:"-6,keyasint,omitempty"`
 
 	Link string `json:"l,omitempty"  xml:"l,attr,omitempty"`
 
-	Name       string  `json:"n,omitempty"  xml:"n,attr,omitempty"`
-	Unit       string  `json:"u,omitempty"  xml:"u,attr,omitempty"`
-	Time       float64 `json:"t,omitempty"  xml:"t,attr,omitempty"`
-	UpdateTime float64 `json:"ut,omitempty"  xml:"ut,attr,omitempty"`
+	Name       string  `json:"n,omitempty"  xml:"n,attr,omitempty"  cbor:"0,keyasint,omitempty"`
+	Unit       string  `json:"u,omitempty"  xml:"u,attr,omitempty"  cbor:"1,keyasint,omitempty"`
+	Time       float64 `json:"t,omitempty"  xml:"t,attr,omitempty"  cbor:"6,keyasint,omitempty"`
+	UpdateTime float64 `json:"ut,omitempty"  xml:"ut,attr,omitempty"  cbor:"7,keyasint,omitempty"`
 
-	Value       *float64 `json:"v,omitempty"  xml:"v,attr,omitempty"`
-	StringValue string   `json:"vs,omitempty"  xml:"vs,attr,omitempty"`
-	DataValue   string   `json:"vd,omitempty"  xml:"vd,attr,omitempty"`
-	BoolValue   *bool    `json:"vb,omitempty"  xml:"vb,attr,omitempty"`
+	Value       *float64 `json:"v,omitempty"  xml:"v,attr,omitempty"  cbor:"2,keyasint,omitempty"`
+	StringValue string   `json:"vs,omitempty"  xml:"vs,attr,omitempty"  cbor:"3,keyasint,omitempty"`
+	DataValue   string   `json:"vd,omitempty"  xml:"vd,attr,omitempty"  cbor:"8,keyasint,omitempty"`
+	BoolValue   *bool    `json:"vb,omitempty"  xml:"vb,attr,omitempty"  cbor:"4,keyasint,omitempty"`
 
-	Sum *float64 `json:"s,omitempty"  xml:"s,attr,omitempty"`
+	Sum *float64 `json:"s,omitempty"  xml:"s,attr,omitempty"  cbor:"5,keyasint,omitempty"`
 }
 
 type SenML struct {
@@ -105,25 +108,23 @@ func Decode(msg []byte, format Format) (SenML, error) {
 
 	case format == CBOR:
 		// parse the input CBOR
-		var cborHandle codec.Handle = new(codec.CborHandle)
-		var decoder *codec.Decoder = codec.NewDecoderBytes(msg, cborHandle)
-		err = decoder.Decode(&s.Records)
+		err = cbor.Unmarshal(msg, &s.Records)
 		if err != nil {
 			//fmt.Println("error parsing CBOR SenML", err)
 			return s, err
 		}
-
-	case format == MPACK:
-		// parse the input MPACK
-		// spec for MessagePack is at https://github.com/msgpack/msgpack/
-		var mpackHandle codec.Handle = new(codec.MsgpackHandle)
-		var decoder *codec.Decoder = codec.NewDecoderBytes(msg, mpackHandle)
-		err = decoder.Decode(&s.Records)
-		if err != nil {
-			//fmt.Println("error parsing MPACK SenML", err)
-			return s, err
-		}
-
+		/*
+			case format == MPACK:
+				// parse the input MPACK
+				// spec for MessagePack is at https://github.com/msgpack/msgpack/
+				var mpackHandle codec.Handle = new(codec.MsgpackHandle)
+				var decoder *codec.Decoder = codec.NewDecoderBytes(msg, mpackHandle)
+				err = decoder.Decode(&s.Records)
+				if err != nil {
+					//fmt.Println("error parsing MPACK SenML", err)
+					return s, err
+				}
+		*/
 	}
 
 	if !IsValid(s) {
@@ -210,24 +211,22 @@ func Encode(s SenML, format Format, options OutputOptions) ([]byte, error) {
 
 	case format == CBOR:
 		// output a CBOR version
-		var cborHandle codec.Handle = new(codec.CborHandle)
-		var encoder *codec.Encoder = codec.NewEncoderBytes(&data, cborHandle)
-		err = encoder.Encode(s.Records)
+		data, err = cbor.Marshal(s.Records, cbor.EncOptions{})
 		if err != nil {
 			//fmt.Println("error encoding CBOR SenML", err)
 			return nil, err
 		}
-
-	case format == MPACK:
-		// output a MPACK version
-		var mpackHandle codec.Handle = new(codec.MsgpackHandle)
-		var encoder *codec.Encoder = codec.NewEncoderBytes(&data, mpackHandle)
-		err = encoder.Encode(s.Records)
-		if err != nil {
-			//fmt.Println("error encoding MPACK SenML", err)
-			return nil, err
-		}
-
+		/*
+			case format == MPACK:
+				// output a MPACK version
+				var mpackHandle codec.Handle = new(codec.MsgpackHandle)
+				var encoder *codec.Encoder = codec.NewEncoderBytes(&data, mpackHandle)
+				err = encoder.Encode(s.Records)
+				if err != nil {
+					//fmt.Println("error encoding MPACK SenML", err)
+					return nil, err
+				}
+		*/
 	case format == LINEP:
 		// ouput Line Protocol
 		var buf bytes.Buffer

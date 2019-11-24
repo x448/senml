@@ -2,10 +2,13 @@ package senml_test
 
 import (
 	"encoding/base64"
+	"encoding/hex"
 	"fmt"
-	"github.com/cisco/senml"
+	"reflect"
 	"strconv"
 	"testing"
+
+	"github.com/x448/senml"
 )
 
 func ExampleEncode1() {
@@ -53,10 +56,10 @@ type TestVector struct {
 
 var testVectors = []TestVector{
 	{true, senml.JSON, false, "W3siYm4iOiJkZXYxMjMiLCJidCI6LTQ1LjY3LCJidSI6ImRlZ0MiLCJidmVyIjo1LCJuIjoidGVtcCIsInUiOiJkZWdDIiwidCI6LTEsInV0IjoxMCwidiI6MjIuMSwicyI6MH0seyJuIjoicm9vbSIsInQiOi0xLCJ2cyI6ImtpdGNoZW4ifSx7Im4iOiJkYXRhIiwidmQiOiJhYmMifSx7Im4iOiJvayIsInZiIjp0cnVlfV0="},
-	{true, senml.CBOR, true, "hKxhX/ZiYm5mZGV2MTIzYmJ0+8BG1cKPXCj2YmJ1ZGRlZ0NkYnZlcgVhbmR0ZW1wYXP7AAAAAAAAAABhdPu/8AAAAAAAAGF1ZGRlZ0NidXT7QCQAAAAAAABhdvtANhmZmZmZmmJ2YvanYV/2YW5kcm9vbWFz9mF0+7/wAAAAAAAAYXb2YnZi9mJ2c2draXRjaGVupmFf9mFuZGRhdGFhc/ZhdvZidmL2YnZkY2FiY6VhX/ZhbmJva2Fz9mF29mJ2YvU="},
+	{true, senml.CBOR, true, "hKohZmRldjEyMyL7wEbVwo9cKPYjZGRlZ0MgBQBkdGVtcAFkZGVnQwb7v/AAAAAAAAAH+0AkAAAAAAAAAvtANhmZmZmZmgX7AAAAAAAAAACjAGRyb29tBvu/8AAAAAAAAANna2l0Y2hlbqIAZGRhdGEIY2FiY6IAYm9rBPU="},
 	{true, senml.XML, false, "PHNlbnNtbCB4bWxucz0idXJuOmlldGY6cGFyYW1zOnhtbDpuczpzZW5tbCI+PHNlbm1sIGJuPSJkZXYxMjMiIGJ0PSItNDUuNjciIGJ1PSJkZWdDIiBidmVyPSI1IiBuPSJ0ZW1wIiB1PSJkZWdDIiB0PSItMSIgdXQ9IjEwIiB2PSIyMi4xIiBzPSIwIj48L3Nlbm1sPjxzZW5tbCBuPSJyb29tIiB0PSItMSIgdnM9ImtpdGNoZW4iPjwvc2VubWw+PHNlbm1sIG49ImRhdGEiIHZkPSJhYmMiPjwvc2VubWw+PHNlbm1sIG49Im9rIiB2Yj0idHJ1ZSI+PC9zZW5tbD48L3NlbnNtbD4="},
 	{false, senml.CSV, false, "dGVtcCwyNTU2OC45OTk5ODgsMjIuMTAwMDAwLGRlZ0MNCg=="},
-	{true, senml.MPACK, true, "lIyhX8CiYm6mZGV2MTIzomJ0y8BG1cKPXCj2omJ1pGRlZ0OkYnZlcgWhbqR0ZW1woXPLAAAAAAAAAAChdMu/8AAAAAAAAKF1pGRlZ0OidXTLQCQAAAAAAAChdstANhmZmZmZmqJ2YsCHoV/AoW6kcm9vbaFzwKF0y7/wAAAAAAAAoXbAonZiwKJ2c6draXRjaGVuhqFfwKFupGRhdGGhc8ChdsCidmLAonZko2FiY4WhX8ChbqJva6FzwKF2wKJ2YsM="},
+	//{true, senml.MPACK, true, "lIyhX8CiYm6mZGV2MTIzomJ0y8BG1cKPXCj2omJ1pGRlZ0OkYnZlcgWhbqR0ZW1woXPLAAAAAAAAAAChdMu/8AAAAAAAAKF1pGRlZ0OidXTLQCQAAAAAAAChdstANhmZmZmZmqJ2YsCHoV/AoW6kcm9vbaFzwKF0y7/wAAAAAAAAoXbAonZiwKJ2c6draXRjaGVuhqFfwKFupGRhdGGhc8ChdsCidmLAonZko2FiY4WhX8ChbqJva6FzwKF2wKJ2YsM="},
 	{false, senml.LINEP, false, "Zmx1ZmZ5U2VubWwsbj10ZW1wLHU9ZGVnQyB2PTIyLjEscz0wIC0xMDAwMDAwMDAwCg=="},
 }
 
@@ -262,5 +265,42 @@ func TestInputString(t *testing.T) {
 	_, err := senml.Decode(data, senml.JSON)
 	if err != nil {
 		t.Fail()
+	}
+}
+
+// CBOR example from https://tools.ietf.org/html/rfc8428#section-6
+func TestCborDecode(t *testing.T) {
+	data, _ := hex.DecodeString("87a721781b75726e3a6465763a6f773a3130653230373361303130383030363a22fb41d303a15b00106223614120050067766f6c7461676501615602fb405e066666666666a3006763757272656e74062402fb3ff3333333333333a3006763757272656e74062302fb3ff4cccccccccccda3006763757272656e74062202fb3ff6666666666666a3006763757272656e74062102f93e00a3006763757272656e74062002fb3ff999999999999aa3006763757272656e74060002fb3ffb333333333333")
+	value := 120.1
+	v1 := 1.2
+	v2 := 1.3
+	v3 := 1.4
+	v4 := 1.5
+	v5 := 1.6
+	v6 := 1.7
+	wantRecords := []senml.SenMLRecord{
+		senml.SenMLRecord{
+			BaseName:    "urn:dev:ow:10e2073a0108006:",
+			BaseTime:    1276020076.001,
+			BaseUnit:    "A",
+			BaseVersion: 5,
+			Value:       &value,
+			Unit:        "V",
+			Name:        "voltage"},
+		senml.SenMLRecord{Name: "current", Time: -5, Value: &v1},
+		senml.SenMLRecord{Name: "current", Time: -4, Value: &v2},
+		senml.SenMLRecord{Name: "current", Time: -3, Value: &v3},
+		senml.SenMLRecord{Name: "current", Time: -2, Value: &v4},
+		senml.SenMLRecord{Name: "current", Time: -1, Value: &v5},
+		senml.SenMLRecord{Name: "current", Time: 0, Value: &v6},
+	}
+
+	s, err := senml.Decode(data, senml.CBOR)
+	if err != nil {
+		t.Fail()
+	}
+
+	if !reflect.DeepEqual(s.Records, wantRecords) {
+		t.Errorf("got: %+v, want %+v", s, wantRecords)
 	}
 }

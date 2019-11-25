@@ -1,2 +1,2 @@
-github.com/fxamacker/cbor v1.3.1-0.20191124042314-3677ff05bd49 h1:mjSfz1fMwwDnLxanY0MBOq2lFnnED61zsX7S9RExVJc=
-github.com/fxamacker/cbor v1.3.1-0.20191124042314-3677ff05bd49/go.mod h1:Uy2lR31/2WfmW0yiA4i3t+we5kF3B/wzKsttcux+i/g=
+github.com/fxamacker/cbor v1.3.1 h1:SP2SkHT//Q8WaIsEfsK1zA3mv+EEv2Y0OFxqcQo9cqk=
+github.com/fxamacker/cbor v1.3.1/go.mod h1:Uy2lR31/2WfmW0yiA4i3t+we5kF3B/wzKsttcux+i/g=

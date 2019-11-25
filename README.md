@@ -4,7 +4,7 @@
 [RFC 8428 Sensor Measurement Lists (SenML)](https://tools.ietf.org/html/rfc8428) defines a format for representing simple sensor measurements and device parameters in Sensor Measurement Lists.  
 
 ## Disco SenML
-Disco SenML is a debloated fork of cisco/senml that produces programs 4 MB smaller.  Also, CBOR representation no longer violates RFC 8428.  Other benefits include having all unit tests pass, resolving some open issues, and having a smaller attack surface.  
+Disco SenML is a debloated fork of cisco/senml that produces programs 4 MB smaller. Other benefits include having all unit tests pass, resolving several important open issues, and having a smaller attack surface.  
 
 Disco SenML was created on Nov 23, 2019 using cisco/senml (4d43ea8) dated Oct 10, 2019.
 
@@ -18,7 +18,7 @@ Primary improvements:
 * __Close issues__: several important open issues at cisco/senml were resolved in this project.
 
 Some resolved issues include:
-* __CBOR does not encode or decode numeric field names__ cisco/senml #2 (2016).  RFC 8428 requires this.
+* __CBOR does not encode or decode numeric field names__ cisco/senml #2 (2016).  SenML RFC 8428 requires this.
 * __Base Value and Base Sum missing from the model__ cisco/senml #18 (2017).
 * __CBOR support uses `go-codec` which adds bloat to the binary__ cisco/senml #22 (2019).
 

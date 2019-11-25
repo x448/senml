@@ -18,7 +18,7 @@ Specific cisco/senml issues fixed in this release:
 * "Base Value and Base Sum missing from the model cisco/senml #18" (2017).
 * "CBOR support uses go-codec which adds bloat to the binary cisco/senml #22" (2019).
 
-Changes from cisco/senml (4d43ea8, Oct 10, 2019):
+Changes to cisco/senml (4d43ea8, Oct 10, 2019):
 * Compiled programs are each 4 MB smaller (senmlCat and senmlServer).
 * CBOR representation uses integers for labels, so it no longer violates SenML RFC 8428.
 * Missing Base Value and Base Sum are added to the model.

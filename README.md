@@ -4,11 +4,32 @@
 [RFC 8428 Sensor Measurement Lists (SenML)](https://tools.ietf.org/html/rfc8428) defines a format for representing simple sensor measurements and device parameters in Sensor Measurement Lists.  
 
 ## Disco SenML
-Disco SenML is a debloated fork of cisco/senml that produces programs 4 MB smaller. Other benefits include having all unit tests pass, resolving several important open issues, and having a smaller attack surface.  
+Disco SenML is a debloated fork of cisco/senml that produces programs 4 MB smaller and fixes important bugs. Other benefits include having all unit tests pass and having a smaller attack surface.  
 
 Disco SenML was created on Nov 23, 2019 using cisco/senml (4d43ea8) dated Oct 10, 2019.
 
 __Special thanks to Cullen Jennings__ at Cisco Systems for his work on RFC 8428 and creating cisco/senml. He did the heavy lifting and changes to his project were trivial by comparison. __And also to Faye Amacker__ for adding requested features to her CBOR library that made the changes easy.
+
+## Release Notes
+Disco SenML initial release on Nov 24, 2019.
+
+Specific cisco/senml issues fixed in this release:
+* "CBOR does not encode or decode numeric field names cisco/senml #2" (2016). 
+* "Base Value and Base Sum missing from the model cisco/senml #18" (2017).
+* "CBOR support uses go-codec which adds bloat to the binary cisco/senml #22" (2019).
+
+Changes from cisco/senml (4d43ea8, Oct 10, 2019):
+* Compiled programs are each 4 MB smaller (senmlCat and senmlServer).
+* CBOR representation uses integers for labels, so it no longer violates SenML RFC 8428.
+* Missing Base Value and Base Sum are added to the model.
+* Fixed bad test data in unit tests and added new CBOR test using example from
+  SenML RFC 8428 so all unit tests pass.
+* Removed MessagePack feature for reasons cited in README.md.
+* Replaced ugorji/go with fxamacker/cbor v1.3.1.
+* Use Go modules and have at least one tagged release.
+* Require Go 1.12
+* Added name to LICENSE.
+* Updated README.md with new name "Disco SenML"
 
 ## Improvements to cisco/senml
 Primary improvements:

@@ -1,4 +1,4 @@
-# Disco SenML - Debloated cisco/senml that passes tests
+# Disco SenML - Debloated cisco/senml with bugfixes
 
 ## SenML
 [RFC 8428 Sensor Measurement Lists (SenML)](https://tools.ietf.org/html/rfc8428) defines a format for representing simple sensor measurements and device parameters in Sensor Measurement Lists.  

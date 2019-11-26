@@ -55,7 +55,7 @@ Known limitations:
 
 Possible limitations (not sure):
 
-* __CBOR Tags (major type 6)__:  this might be a non-issue because I didn't see any used in cisco/senml.  If CBOR tags are present in SenML, they'll be ignored until this project upgrades fxamacker/cbor to v1.4 or v1.5 (when released).
+* __CBOR Tags (major type 6)__:  this might be a non-issue because I didn't see any used in cisco/senml.  If CBOR tags are present in SenML, they'll be ignored until this project upgrades fxamacker/cbor to v1.4 (when released).
 
 # senmlCat
 Tool to convert SenML between formats and act as gateway server to other services

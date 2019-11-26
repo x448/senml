@@ -49,9 +49,9 @@ Changes to cisco/senml (4d43ea8, Oct 10, 2019):
 ## Limitations and Requirements
 Known limitations:
 
-* __Go 1.12__: Go 1.12 or newer is required.
-* __Security Audit__: I didn't conduct a security audit of cisco/senml or this project.  A security audit is recommended.
-* __Code Review and Refactoring__:  I didn't perform any code review or refactoring beyond the minimum changes required to resolve cisco/senml issues 2, 18 and 22.  Code review and refactoring is recommended.
+* Go 1.12: Go 1.12 or newer is required.
+* Security Audit: I didn't conduct a security audit of cisco/senml or this project.  A security audit is recommended.
+* Code Review and Refactoring:  I didn't perform any code review or refactoring beyond the minimum changes required to resolve cisco/senml issues 2, 18 and 22.  Code review and refactoring is recommended.
 
 Possible limitations (not sure):
 

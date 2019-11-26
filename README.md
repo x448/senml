@@ -10,12 +10,16 @@ All features are the same as cisco/senml except MessagePack support is removed.
 
 Disco SenML was created on Nov 23, 2019 using cisco/senml (4d43ea8) dated Oct 10, 2019.
 
-__Special thanks to Cullen Jennings__ at Cisco Systems for his work on RFC 8428 and creating cisco/senml. He did the heavy lifting in those, so changes to his project were trivial by comparison. __And also to Faye Amacker__ for adding requested features to her [CBOR library](https://github.com/fxamacker/cbor) that made the changes easy.
+__Special thanks__:
+
+* Cullen Jennings for his work on RFC 8428 (SenML) and cisco/senml. He did the heavy lifting in those, so changes made by this project are trivial by comparison.
+* Faye Amacker for adding requested features to her [CBOR library](https://github.com/fxamacker/cbor) that made this easy.
 
 ## Release Notes
 Disco SenML initial release on Nov 24, 2019.
 
 This project fixes open issues in cisco/senml (4d43ea8, Oct 10, 2019):
+
 * __cisco/senml #2 (2016)__ "CBOR does not encode or decode numeric field names". <-- RFC 8428 violation.
 * __cisco/senml #18 (2017)__ "Base Value and Base Sum missing from the model.
 * __cisco/senml #22 (2019)__ "CBOR support uses go-codec which adds bloat to the binary.
@@ -23,11 +27,13 @@ This project fixes open issues in cisco/senml (4d43ea8, Oct 10, 2019):
 There are no changes to core cisco/senml features except removal of MessagePack.
 
 MessagePack was removed because it:
+
 * increased bloat (cisco/senml #22) and attack surface.
 * isn't mentioned in SenML RFC 8428.
 * prevented having a [CBOR library](https://github.com/fxamacker/cbor) (fxamacker/cbor) as the only external dependency.
 
 Changes to cisco/senml (4d43ea8, Oct 10, 2019):
+
 * Compiled programs are each 4 MB smaller (senmlCat and senmlServer).
 * CBOR representation uses integers for labels, so it no longer violates SenML RFC 8428.
 * Missing Base Value and Base Sum are added to the model.
@@ -42,11 +48,13 @@ Changes to cisco/senml (4d43ea8, Oct 10, 2019):
 
 ## Limitations and Requirements
 Known limitations:
+
 * __Go 1.12__: Go 1.12 or newer is required.
-* __Security Audit__: I didn't conduct a security audit of cisco/senml or this project.  I just tackled the most obvious low-hanging fruit while helping a CBOR library find non-hobby projects for program size comparisons.
-* __Code Review and Refactoring__:  Only minimal changes were made to resolve cisco/senml issues 2, 18 and 22.  At a glance, code review and refactoring is highly recommended.
+* __Security Audit__: I didn't conduct a security audit of cisco/senml or this project.  A security audit is recommended.
+* __Code Review and Refactoring__:  I didn't perform any code review or refactoring beyond the minimum changes required to resolve cisco/senml issues 2, 18 and 22.  Code review and refactoring is recommended.
 
 Possible limitations (not sure):
+
 * __CBOR Tags (major type 6)__:  this might be a non-issue because I didn't see any used in cisco/senml.  If CBOR tags are present in SenML, they'll be ignored until this project upgrades fxamacker/cbor to v1.4 or v1.5 (when released).
 
 # senmlCat

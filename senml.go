@@ -21,8 +21,7 @@ const (
 	XML
 	CBOR
 	CSV
-	//MPACK
-	_
+	_ // Was MPACK.  Keep this to preserve LINEP and JSONLINE values.
 	LINEP
 	JSONLINE
 )
@@ -113,18 +112,6 @@ func Decode(msg []byte, format Format) (SenML, error) {
 			//fmt.Println("error parsing CBOR SenML", err)
 			return s, err
 		}
-		/*
-			case format == MPACK:
-				// parse the input MPACK
-				// spec for MessagePack is at https://github.com/msgpack/msgpack/
-				var mpackHandle codec.Handle = new(codec.MsgpackHandle)
-				var decoder *codec.Decoder = codec.NewDecoderBytes(msg, mpackHandle)
-				err = decoder.Decode(&s.Records)
-				if err != nil {
-					//fmt.Println("error parsing MPACK SenML", err)
-					return s, err
-				}
-		*/
 	}
 
 	if !IsValid(s) {
@@ -216,17 +203,6 @@ func Encode(s SenML, format Format, options OutputOptions) ([]byte, error) {
 			//fmt.Println("error encoding CBOR SenML", err)
 			return nil, err
 		}
-		/*
-			case format == MPACK:
-				// output a MPACK version
-				var mpackHandle codec.Handle = new(codec.MsgpackHandle)
-				var encoder *codec.Encoder = codec.NewEncoderBytes(&data, mpackHandle)
-				err = encoder.Encode(s.Records)
-				if err != nil {
-					//fmt.Println("error encoding MPACK SenML", err)
-					return nil, err
-				}
-		*/
 	case format == LINEP:
 		// ouput Line Protocol
 		var buf bytes.Buffer

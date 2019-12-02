@@ -1,4 +1,5 @@
-// SenML encoder and decoder to pare Sensor Markup Language
+//Disco SenML is cisco/senml with bugfixes. SenML CBOR complies with RFC 8428, programs are 4 MB smaller.
+
 package senml
 
 import (

@@ -1,4 +1,4 @@
-//Disco SenML is cisco/senml with bugfixes. SenML CBOR complies with RFC 8428, programs are 4 MB smaller.
+// SenML (Disco SenML) is cisco/senml (Oct 2019) with bugfixes and programs are also 4 MB smaller.
 
 package senml
 

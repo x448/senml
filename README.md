@@ -18,11 +18,12 @@ __Special thanks__:
 ## Release Notes
 Disco SenML initial release on Nov 24, 2019.
 
-This project fixes open issues in cisco/senml (4d43ea8, Oct 10, 2019):
+This project fixes open issues in cisco/senml (d5a3c66, Dec 11, 2019):
 
 * __cisco/senml #2 (2016)__ "CBOR does not encode or decode numeric field names". <-- RFC 8428 violation.
 * __cisco/senml #18 (2017)__ "Base Value and Base Sum missing from the model.
 * __cisco/senml #22 (2019)__ "CBOR support uses go-codec which adds bloat to the binary.
+* __cisco/senml #25 (2019)__ "cisco/senml does not pass unit tests"
 
 There are no changes to core cisco/senml features except removal of MessagePack.
 

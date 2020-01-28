@@ -18,6 +18,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Go Coverage
-      run: go test -short -cover | grep coverage | python -c "import os,re,sys; cover_rpt = sys.stdin.read(); print(cover_rpt); min_cover = float(re.findall(r'\d*\.\d+|\d+', os.environ['GITHUB_WORKFLOW'])[0]); cover = float(re.findall(r'\d*\.\d+|\d+', cover_rpt)[0]); sys.exit(1) if (cover > 100) or (cover < min_cover) else sys.exit(0)"
+      run: go test -short -cover | grep "^ok.*coverage.*of statements$" | python -c "import os,re,sys; cover_rpt = sys.stdin.read(); print(cover_rpt); min_cover = float(re.findall(r'\d*\.\d+|\d+', os.environ['GITHUB_WORKFLOW'])[0]); cover = float(re.findall(r'\d*\.\d+|\d+', cover_rpt)[0]); sys.exit(1) if (cover > 100) or (cover < min_cover) else sys.exit(0)"
 
       # This doesn't check senmlCat or senmlServer because they have no tests.

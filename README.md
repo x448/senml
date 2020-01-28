@@ -52,6 +52,7 @@ Changes to cisco/senml (4d43ea8, Oct 10, 2019):
 ## Limitations
 Known limitations:
 
+* There are no unit tests for senmlCat or senmlServer. Using senmlCat or senmlServer is not recommended.
 * Security Audit: I didn't conduct a security audit of cisco/senml or this project.  A security audit is recommended.
 * Code Review and Refactoring:  I didn't perform any code review or refactoring beyond the minimum changes required to resolve cisco/senml issues 2, 18, 22 and 25.  Code review and refactoring is recommended.
 

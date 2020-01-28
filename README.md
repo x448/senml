@@ -1,4 +1,6 @@
 # Disco SenML is cisco/senml with bugfixes
+[![](https://github.com/x448/senml/workflows/ci/badge.svg)](https://github.com/x448/senml/blob/master/.github/workflows/ci.yml)
+[![cover ≥80.7%](https://github.com/x448/senml/workflows/cover%20%E2%89%A580.7%25/badge.svg)](https://github.com/x448/senml/blob/master/.github/workflows/cover.yml)
 
 ## SenML
 [RFC 8428 Sensor Measurement Lists (SenML)](https://tools.ietf.org/html/rfc8428) defines a format for representing simple sensor measurements and device parameters in Sensor Measurement Lists.  

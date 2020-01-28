@@ -1,5 +1,6 @@
 # Disco SenML is cisco/senml with bugfixes
 [![](https://github.com/x448/senml/workflows/ci/badge.svg)](https://github.com/x448/senml/blob/master/.github/workflows/ci.yml)
+[![cover ≥80.7%](https://github.com/x448/senml/workflows/cover%20%E2%89%A580.7%25/badge.svg)](https://github.com/x448/senml/blob/master/.github/workflows/cover.yml)
 
 ## SenML
 [RFC 8428 Sensor Measurement Lists (SenML)](https://tools.ietf.org/html/rfc8428) defines a format for representing simple sensor measurements and device parameters in Sensor Measurement Lists.  
@@ -51,6 +52,7 @@ Changes to cisco/senml (4d43ea8, Oct 10, 2019):
 ## Limitations
 Known limitations:
 
+* There are no unit tests for senmlCat or senmlServer. Using senmlCat or senmlServer is not recommended.
 * Security Audit: I didn't conduct a security audit of cisco/senml or this project.  A security audit is recommended.
 * Code Review and Refactoring:  I didn't perform any code review or refactoring beyond the minimum changes required to resolve cisco/senml issues 2, 18, 22 and 25.  Code review and refactoring is recommended.
 

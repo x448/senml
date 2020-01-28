@@ -47,16 +47,15 @@ Changes to cisco/senml (4d43ea8, Oct 10, 2019):
 * Added name to LICENSE.
 * Updated README.md with new name "Disco SenML"
 
-## Limitations and Requirements
+## Limitations
 Known limitations:
 
-* Go 1.12: Go 1.12 or newer is required.
 * Security Audit: I didn't conduct a security audit of cisco/senml or this project.  A security audit is recommended.
-* Code Review and Refactoring:  I didn't perform any code review or refactoring beyond the minimum changes required to resolve cisco/senml issues 2, 18 and 22.  Code review and refactoring is recommended.
+* Code Review and Refactoring:  I didn't perform any code review or refactoring beyond the minimum changes required to resolve cisco/senml issues 2, 18, 22 and 25.  Code review and refactoring is recommended.
 
-Possible limitations (not sure):
+## Requirements
 
-* __CBOR Tags (major type 6)__:  this might be a non-issue because I didn't see any used in cisco/senml.  If CBOR tags are present in SenML, they'll be ignored until this project upgrades fxamacker/cbor to v1.4 (when released).
+Go 1.12+ is required.
 
 # senmlCat
 Tool to convert SenML between formats and act as gateway server to other services
@@ -82,3 +81,9 @@ the database called "junk"
 The -expand is needed to expand base values into each line of the Line Protocol
 
 senmlCat -ijsons -http 8880 -expand -linp -print -post http://localhost:8086/write?db=junk
+
+# License
+Copyright 2019-present Montgomery Edwards⁴⁴⁸ (github.com/x448)  
+Copyright 2016-2019 Cullen Jennings
+
+x448/senml is licensed under the BSD 2-Clause "Simplified" License.  See [LICENSE](LICENSE) for the full license text.

@@ -12,7 +12,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/fxamacker/cbor"
+	"github.com/fxamacker/cbor/v2"
 )
 
 type Format int
@@ -199,7 +199,7 @@ func Encode(s SenML, format Format, options OutputOptions) ([]byte, error) {
 
 	case format == CBOR:
 		// output a CBOR version
-		data, err = cbor.Marshal(s.Records, cbor.EncOptions{})
+		data, err = cbor.Marshal(s.Records)
 		if err != nil {
 			//fmt.Println("error encoding CBOR SenML", err)
 			return nil, err

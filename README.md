@@ -6,7 +6,15 @@
 [RFC 8428 Sensor Measurement Lists (SenML)](https://tools.ietf.org/html/rfc8428) defines a format for representing simple sensor measurements and device parameters in Sensor Measurement Lists.  
 
 ## Disco SenML
-Disco SenML is a fork of [cisco/senml](https://github.com/cisco/senml) that resolves various issues.  Programs are 4 MB smaller, CBOR representation no longer violates RFC 8428, and all unit tests pass. 
+Disco SenML is a fork of [cisco/senml](https://github.com/cisco/senml) that resolves various issues.  Programs are smaller, CBOR representation no longer violates RFC 8428, and all unit tests pass. 
+
+By switching CBOR library to [fxamacker/cbor](https://github.com/fxamacker/cbor), x448/senml is not vulnerable to the same resource exhaustion attacks as cisco/senml from malformed SenML CBOR representation.
+
+![alt text](https://github.com/x448/images/raw/master/senml/cbor_security_comparison.svg?sanitize=1 "SenML CBOR Security Comparison")
+
+By switching CBOR library to [fxamacker/cbor](https://github.com/fxamacker/cbor), x448/senml is 4.4 MB smaller than cisco/senml (for senmlCat).
+
+![image](https://user-images.githubusercontent.com/57072051/76242738-2bf42300-6205-11ea-9791-52e69b7b774c.png)
 
 All features are the same as cisco/senml except MessagePack support is removed.
 

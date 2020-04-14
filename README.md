@@ -10,11 +10,11 @@ Disco SenML is a fork of [cisco/senml](https://github.com/cisco/senml) that reso
 
 By switching CBOR library to [fxamacker/cbor](https://github.com/fxamacker/cbor), x448/senml is not vulnerable to the same resource exhaustion attacks as cisco/senml from malformed SenML CBOR representation.
 
-![alt text](https://github.com/x448/images/raw/master/senml/cbor_security_comparison.svg?sanitize=1 "SenML CBOR Security Comparison")
+![image](https://user-images.githubusercontent.com/57072051/79265367-9e3ad180-7e5b-11ea-9ed0-d3779de8d72a.png)
 
 By switching CBOR library to [fxamacker/cbor](https://github.com/fxamacker/cbor), x448/senml is 4.4 MB smaller than cisco/senml (for senmlCat).
 
-![image](https://user-images.githubusercontent.com/57072051/76242738-2bf42300-6205-11ea-9791-52e69b7b774c.png)
+![image](https://user-images.githubusercontent.com/57072051/79264086-99751e00-7e59-11ea-8c0f-a8bf0dfdf9ba.png)
 
 All features are the same as cisco/senml except MessagePack support is removed.
 
@@ -94,7 +94,7 @@ The -expand is needed to expand base values into each line of the Line Protocol
 senmlCat -ijsons -http 8880 -expand -linp -print -post http://localhost:8086/write?db=junk
 
 # License
-Copyright 2019-present Montgomery Edwards⁴⁴⁸ (github.com/x448)  
-Copyright 2016-2019 Cullen Jennings
+Copyright © 2019-present Montgomery Edwards⁴⁴⁸ (github.com/x448)  
+Copyright © 2016-2019 Cullen Jennings
 
 x448/senml is licensed under the BSD 2-Clause "Simplified" License.  See [LICENSE](LICENSE) for the full license text.
